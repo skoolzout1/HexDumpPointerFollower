@@ -65,8 +65,7 @@ int main()
 	}
 	string Value;
 	string Address;
-	//string InPath = "DUMP.bin";
-	string InPath = "C:/Users/skoolzout1/Desktop/Wii U Modding/JGeckoU-master/Dumps/BoTW/Octoballoon/DUMP.bin";
+	string InPath = "DUMP.bin";
 	vector<long long int> Offsets;
 
 
