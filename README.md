@@ -8,7 +8,10 @@ It's main use was designed or following pointers within hex dumps.
 
 In case you don't know, a pointer is just an address who's value is another address.
 
-the format is given as such:
+
+the format for this program, is given as such:
+
+This program assumes the dump file is located in the same directory as the .exe and expects the name of the dump to be DUMP.bin
 
 You MUST start with the dereferencing of an address.
 All adresses and offsets must start with a "0x" (without quotes) before their values.
