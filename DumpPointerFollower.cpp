@@ -199,6 +199,8 @@ int main()
 
 	InFile.close();
 
+	cout << "\n\ntype anything and press enter to close";
+	cin >> Value;
 
 
 	return 0;
