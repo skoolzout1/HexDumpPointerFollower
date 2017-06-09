@@ -16,23 +16,53 @@ char GetValHex(char input);
 bool InvalidTarget(string Trg);
 
 int PointerDepthASDF;
-
+string clearstringasdf;
 int main()
 {
-	bool firstrun = true;
 
-    A:
+	
+B:
+
+	ifstream InFile;
+  
 	cout << "Made by: Skoolzout1\n======================================================================\n\n";
-	cout << "Make sure your dump file is located in this program's same directory,\n and is named: DUMP.bin\n\n\n";
+	cout << "Make sure your dump file is located in this program's same directory,\n and is a .bin\n\n\n";
+	string InPath;
+	cout << "Enter Name of .bin file to open within this directory\nYOU DO NOT NEED TO ADD '.bin' TO THE NAME \n\n File name is NOT case sensitive\n\n";
+	cin >> InPath;
+	InPath += ".bin";
+
+
+
+	InFile.open(InPath.c_str());
+
+
+
+	while (!InFile.is_open())
+	{
+		perror("File Open Error: \n");
+		cout << "\nEnter Name of .bin file to open within this directory: \n";
+		cin >> InPath;
+		InPath += ".bin";
+		InFile.open(InPath.c_str());
+	}
+	string StartAdr;
+	cout << "Enter Dump Start address: ";
+	cin >> StartAdr;
+	while (StartAdr.size() != 8)
+	{
+		cout << "Starting Address is not 32bits in length. Please Re-enter:\n";
+		cin >> StartAdr;
+	}
+	A:
+
+	getline(cin, clearstringasdf);
+
 	cout << "Type 'showme' to see example pointer equation\n";
 	cout << "Enter Pointer equation: ";
 	string Target;
 	
-	if (!firstrun)
-	{
-		string clearstream;
-		getline(cin, clearstream);
-	}
+
 	getline(cin, Target);
 	while (Target == "showme")
 	{
@@ -55,44 +85,22 @@ int main()
 			getline(cin, Target);
 		}
 	}
-	string StartAdr;
-	cout << "Enter Dump Start address: ";
-	cin >> StartAdr;
-	while (StartAdr.size() != 8)
-	{
-		cout << "Starting Address is not 32bits in length. Please Re-enter:\n";
-		cin >> StartAdr;
-	}
+	
+	
 	string Value;
 	string Address;
-	string InPath = "DUMP.bin";
+
+
 	vector<long long int> Offsets;
 
 
-	ifstream InFile;
 
-
-	InFile.open(InPath.c_str());
-
-
-
-	if (!InFile.is_open())
-	{
-		perror("File Open Error");
-		"\n\nProgram will close after entering any phrase.";
-		cin >> Value;
-		exit(1);
-	}
-	else
-	{
-		cout << "File Check Good!\n\n";
-	}
 
 	const int DATASIZE = 4;
-	string Startadr;
+	string frstAdr;
 	for (int i = PointerDepthASDF + 2; i < (8 + PointerDepthASDF + 2); i++)
 	{
-		Startadr += Target[i];
+		frstAdr += Target[i];
 	}
 	
 	for (int i = 0; i < Target.size(); i++)
@@ -124,13 +132,10 @@ int main()
 		}
 	}
 
-
-	InFile.seekg(ToDec(Startadr) - ToDec(StartAdr));
-
+	InFile.seekg(ToDec(frstAdr) - ToDec(StartAdr));
 	for (int count = 0; count < PointerDepthASDF; count++)
 	{
 		int x = 0;
-
 		for (int i = 0; i < DATASIZE; i++)
 		{
 			x |= (InFile.get() << 8 * (DATASIZE - 1 - i));
@@ -162,8 +167,8 @@ int main()
 		Value = dummystr + Value;
 	}
 
-	cout << "Points to the address of: " << Address << endl;
-	cout << "Value inside of " << Address << ": " << Value << endl;
+	cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPoints to the address of: " << Address << endl;
+	cout << "Value inside of " << Address << ": " << Value << endl << endl;
 
 
 	if (InFile.fail())
@@ -181,26 +186,42 @@ int main()
 	}
 
 	string response;
-	cout << "Would you like to enter another pointer to follow?\n type Y for yes, and N for no:\n";
+	cout << "\nWould you like to enter another pointer to follow?\n type Y for yes, and N for no:\n";
 	cin >> response;
 	while (response != "Y" && response != "y" && response != "N" && response != "n")
 	{
 		cout << "Invalid response, please re-enter:\n";
-		cout << "Would you like to enter another pointer to follow?\n type Y for yes, and N for no:\n";
+		cout << "\nWould you like to enter another pointer to follow?\n type Y for yes, and N for no:\n";
 		cin >> response;
 	}
 
 	if (response == "Y" || response == "y")
 	{
-		firstrun = false;
-		goto A;
+		response = "";
+		cout << "\nUse the same Dump file? (Y/N): ";
+		cin >> response;
+		while (response != "Y" && response != "y" && response != "N" && response != "n")
+		{
+			cout << "Invalid response, please re-enter:\n";
+			cout << "\nUse the same Dump file? (Y/N): ";
+			cin >> response;
+		}
+		if (response == "Y" || response == "y")
+		{
+			goto A;
+		}
+		else if (response == "N" || response == "n")
+		{
+			getline(cin, clearstringasdf);
+			goto B;
+		}
+		
 	}
 
 
 	InFile.close();
 
-	cout << "\n\ntype anything and press enter to close";
-	cin >> Value;
+
 
 
 	return 0;
