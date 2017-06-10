@@ -4,7 +4,7 @@ Designed for following pointers within Wii U memory dumps in Big Endian.
 
 This is just a random program i made originally for myself, but i figured if anyone else wants it then why not..
 
-It's main use was designed or following pointers within hex dumps.
+It's main use was designed for following pointers within hex dumps.
 
 In case you don't know, a pointer is just an address who's value is another address.
 
