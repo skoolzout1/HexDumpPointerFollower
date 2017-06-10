@@ -11,9 +11,9 @@ In case you don't know, a pointer is just an address who's value is another addr
 
 the format for this program, is given as such:
 
-This program assumes the dump file is located in the same directory as the .exe and expects the name of the dump to be DUMP.bin
+This program assumes the dump file is located in the same directory as the .exe and expects the dump to be a ".bin" file.
 
-You MUST start with the dereferencing of an address.
+You MUST start with the dereferencing of an address. (ie: [0xADDRESSS]  )
 All adresses and offsets must start with a "0x" (without quotes) before their values.
 All addresses and offsets must be in Hexidecimal.
 
@@ -25,4 +25,4 @@ Here is an example of a 4 stage pointer for BoTW (this points to link's current 
 
 [[[[0x101C1D40] + 0x2580] + 0xB24] + 0x40] + 0x980.
 
-The program should HOPEFULLY catch any mistakes you make, but its no where near perfect.
+The program should HOPEFULLY catch any mistakes you make, but its not perfect.
