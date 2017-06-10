@@ -17,6 +17,8 @@ bool InvalidTarget(string Trg);
 
 int PointerDepthASDF;
 string clearstringasdf;
+string frstAdr;
+string StartAdrASDF;
 int main()
 {
 
@@ -46,13 +48,13 @@ B:
 		InPath += ".bin";
 		InFile.open(InPath.c_str());
 	}
-	string StartAdr;
+	
 	cout << "Enter Dump Start address: ";
-	cin >> StartAdr;
-	while (StartAdr.size() != 8)
+	cin >> StartAdrASDF;
+	while (StartAdrASDF.size() != 8)
 	{
 		cout << "Starting Address is not 32bits in length. Please Re-enter:\n";
-		cin >> StartAdr;
+		cin >> StartAdrASDF;
 	}
 	A:
 
@@ -97,11 +99,8 @@ B:
 
 
 	const int DATASIZE = 4;
-	string frstAdr;
-	for (int i = PointerDepthASDF + 2; i < (8 + PointerDepthASDF + 2); i++)
-	{
-		frstAdr += Target[i];
-	}
+	
+
 	
 	for (int i = 0; i < Target.size(); i++)
 	{
@@ -132,7 +131,7 @@ B:
 		}
 	}
 
-	InFile.seekg(ToDec(frstAdr) - ToDec(StartAdr));
+	InFile.seekg(ToDec(frstAdr) - ToDec(StartAdrASDF));
 	for (int count = 0; count < PointerDepthASDF; count++)
 	{
 		int x = 0;
@@ -141,11 +140,11 @@ B:
 			x |= (InFile.get() << 8 * (DATASIZE - 1 - i));
 
 		}
-		InFile.seekg(x - ToDec(StartAdr) + Offsets[count]);
+		InFile.seekg(x - ToDec(StartAdrASDF) + Offsets[count]);
 	}
 
-	Address = ToHex((InFile.tellg()) + ToDec(StartAdr));
-	InFile.seekg(ToDec(Address) - ToDec(StartAdr));
+	Address = ToHex((InFile.tellg()) + ToDec(StartAdrASDF));
+	InFile.seekg(ToDec(Address) - ToDec(StartAdrASDF));
 	int dummy = 0;
 	for (int i = 0; i < DATASIZE; i++)
 	{
@@ -460,7 +459,18 @@ bool InvalidTarget(string Trg)
 		cout << "\n\nThat wasn't even close to the correct format.. You're good!\n";
 		return false;
 	}
-	
+	frstAdr = "";
+	for (int i = PointerDepthASDF + 2; i < (8 + PointerDepthASDF + 2); i++)
+	{
+		frstAdr += Trg[i];
+	}
+
+	if (frstAdr < StartAdrASDF)
+	{
+		cout << "\nInitial address of " << frstAdr << " is less than the start address of " << StartAdrASDF;
+		return false;
+	}
+
 	for (int i = PointerDepthASDF -1; i < Trg.size(); i++)
 	{
 		if (Trg[i] == '[')
