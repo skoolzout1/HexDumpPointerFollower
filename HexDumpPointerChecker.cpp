@@ -35,15 +35,16 @@ B:
 
 	cout << "Made by: Skoolzout1\n======================================================================\n\n";
 	cout << "Make sure your dump file is located in this program's same directory,\n and is a .bin\n\n\n";
-	string InPath;
 	cout << "Enter Name of .bin file to open within this directory\nYOU DO NOT NEED TO ADD '.bin' TO THE NAME \n\n File name is NOT case sensitive\n\n";
+	string InPath;
 	cin >> InPath;
 	InPath += ".bin";
+	InPath = "C:/Users/skoolzout1/Desktop/Wii U Modding/JGeckoU-master/Dumps/BoTW/1.2.0 Full Dump/4C8A0000.bin";
 
 	
 
 
-	InFileASDF.open(InPath.c_str());
+	InFileASDF.open(InPath.c_str(), ios::binary);
 
 
 
@@ -708,8 +709,10 @@ bool FollowPointer(string Pntr, string &Val, string &Adr)
 		int x = 0;
 		for (int i = 0; i < DATASIZE; i++)
 		{
-			x |= (InFileASDF.get() << 8 * (DATASIZE - 1 - i));
-
+			//x |= (InFileASDF.get() << 8 * (DATASIZE - 1 - i));
+			int y = InFileASDF.get();
+			y <<= 8 * (DATASIZE - 1 - i);
+			x |= y;
 		}
 		if (x < ToDec(StartAdrASDF))
 		{
