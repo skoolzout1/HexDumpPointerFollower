@@ -39,7 +39,6 @@ B:
 	string InPath;
 	cin >> InPath;
 	InPath += ".bin";
-	InPath = "C:/Users/skoolzout1/Desktop/Wii U Modding/JGeckoU-master/Dumps/BoTW/1.2.0 Full Dump/4C8A0000.bin";
 
 	
 
