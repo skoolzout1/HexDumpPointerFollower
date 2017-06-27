@@ -161,7 +161,7 @@ A:
 		cout << "\n\nEnter the name of the file containing the Pointers, WITHOUT the .txt\n";
 		cin >> PntrFileName;
 		PntrFileName += ".txt";
-		PointerFile.open(PntrFileName.c_str());
+		PointerFile.open(PntrFileName.c_str(), ios::binary);
 		while (!PointerFile.is_open())
 		{
 			perror("File Open Error: \n");
