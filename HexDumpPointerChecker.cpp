@@ -63,6 +63,7 @@ B:
 		cout << "Starting Address is not 32bits in length. Please Re-enter:\n";
 		cin >> StartAdrASDF;
 	}
+	StartAdrASDF = ToHex(ToDec(StartAdrASDF)); //Convert to Upper case
 A:
 
 	getline(cin, clearstringasdf);
