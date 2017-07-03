@@ -1,7 +1,9 @@
 # HexDumpPointerFollower/Checker
 Designed for following pointers within Wii U memory dumps in Big Endian.
 
-DISCUSS THE PROGRAM HERE: https://gbatemp.net/threads/hex-file-pointer-checker-and-follower.475000/
+IMPORTANT: Make sure you have Visual C++ Redistributable installed in order to use this program. Get it here: https://www.microsoft.com/en-ca/download/details.aspx?id=48145
+
+Discuss the program here: https://gbatemp.net/threads/hex-file-pointer-checker-and-follower.475000/
 
 
 
