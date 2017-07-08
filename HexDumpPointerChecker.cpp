@@ -39,6 +39,7 @@ B:
 	string InPath;
 	cin >> InPath;
 	InPath += ".bin";
+	
 
 	
 
@@ -114,6 +115,22 @@ A:
 		{
 			cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPoints to the address of: " << Address << endl;
 			cout << "Value inside of " << Address << ": " << Value << endl << endl;
+			int AsDec = ToDec(Value);
+			char CharArray[4];
+			string AsString;
+			for (int i = 0; i < 4; i++)
+			{
+				CharArray[3-i] = (AsDec >> (8 * i)) & 0xFF;
+			}
+			for (int i = 0; i < 4; i++)
+			{
+				AsString += CharArray[i];
+			}
+			
+			float AsFloat = *(float*)&AsDec;
+			cout << "Value in Decimal: " << AsDec;
+			cout << "\nValue as String: " << AsString;
+			cout << "\nValue as Float: " << AsFloat << endl << endl;
 		}
 		else
 		{
