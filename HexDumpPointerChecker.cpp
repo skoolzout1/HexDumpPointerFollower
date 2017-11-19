@@ -176,6 +176,7 @@ A:
 		cout << "Ensure the file containing the pointers is in the same directory as this EXE.\n";
 		cout << "Pointers should be seperated by a return (Enter).\n";
 		cout << "This program will output a text file with the pointers that successfully reach\na specified target address. It will be located in this directory with\n its name being the current Epoch time in Hex\n";
+		cout << "If you are Burst Reading a list of Pointers from a file\nENSURE THERE ISNT A SPACE AT THE BOTTOM OF THE TEXT FILE.\n";
 		cout << "\n\nEnter the name of the file containing the Pointers, WITHOUT the .txt\n";
 		cin >> PntrFileName;
 		PntrFileName += ".txt";
@@ -196,12 +197,12 @@ A:
 		string Value;
 		string Address;
 		string response;
-		cout << "\nEnter 1 to Filter out pointers that do not point to an address\n Or enter 2 to Filter Pointers out that do not Point to a certain Value\n";
+		cout << "\nEnter 1 to Filter out pointers that do not point to an address\n Or Enter 2 to Filter Pointers out that do not Point to a certain Value\n Or Enter 3 to just keep Pointers that point to valid addresses\n";
 		cin >> response;
-		while (response != "1" && response != "2")
+		while (response != "1" && response != "2" && response != "3")
 		{
 			cout << "Invalid entry for Filter type.";
-			cout << "\nEnter 1 to Filter out pointers that do not point to an address\n Or enter 2 to Filter Pointers out that do not Point to a certain Value\n";
+			cout << "\nEnter 1 to Filter out pointers that do not point to an address\n Or Enter 2 to Filter Pointers out that do not Point to a certain Value\n Or Enter 3 to just keep Pointers that point to valid addresses\n";
 			cin >> response;
 		}
 
@@ -215,8 +216,9 @@ A:
 				cout << "\nEnter Target Address\n";
 				cin >> Target;
 			}
+			Target = ToHex(ToDec(Target)); //Lazy expensive way to convert to upper case.
 		}
-		else
+		else if (response == "2")
 		{
 			cout << "Enter Target Value\n";
 			cin >> Target;
@@ -226,9 +228,10 @@ A:
 				cout << "\nEnter Target Value\n";
 				cin >> Target;
 			}
+			Target = ToHex(ToDec(Target)); //Lazy expensive way to convert to upper case.
 		}
-
-		Target = ToHex(ToDec(Target)); //Lazy expensive way to convert to upper case.
+		
+		
 
 		//Get Pointers from file
 		while (!PointerFile.fail())
@@ -276,7 +279,7 @@ A:
 					}
 				}
 			}
-			else
+			else if (response == "2")
 			{
 				for (int i = 0; i < Pointerz.size(); i++)
 				{
@@ -291,6 +294,16 @@ A:
 				}
 				
 			}
+			else
+			{
+				for (int i = 0; i < Pointerz.size(); i++)
+				{
+					if (FollowPointer(Pointerz[i], Value, Address))
+					{
+							GoodPointerz.push_back(Pointerz[i]);
+					}
+				}
+			}
 			
 
 			cout << "Done!\n Eliminated " << Pointerz.size() - GoodPointerz.size() << " bad pointers.\n";
@@ -304,8 +317,13 @@ A:
 			{
 				for (int i = 0; i < GoodPointerz.size(); i++)
 				{
-					OutFile << GoodPointerz[i] << endl;
+					OutFile << GoodPointerz[i];
+					if (i != (GoodPointerz.size() - 1))
+					{
+						OutFile << endl;
+					}
 				}
+				
 				cout << "Done Writing! Check " << OutPath << " for valid pointers.\n";
 				OutFile.close();
 			}
